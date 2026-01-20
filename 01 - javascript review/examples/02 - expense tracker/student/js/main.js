@@ -62,9 +62,9 @@ document
                     // to get this to show up, push it to the array of data & then re-render
                     theExpenses.push(newExpense);
                     renderExpenses(theExpenses);
-                    this.reset();  // reset thje from to clear inputs after submitting
+                    this.reset();  // reset the from to clear inputs after submitting
                 } else {
-                    alert("Please fill in al fields correctly."); // placeholder 
+                    alert("Please fill in all fields correctly."); // placeholder 
                 } else {
                     // non-obvious: if the text isn't "Add Expense" (because I'll change)
                     const expenseId = parseInt(document.getElementById("expense-id")); // reading from 
