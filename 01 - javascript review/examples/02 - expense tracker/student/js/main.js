@@ -48,7 +48,7 @@ document
             const date = document.getElementById("date").value;
             // we're going to write this behaviour to be reusable between
             //
-            if (document.getElementById("submiter").innerText === "Add Expenses")
+            if (document.getElementById("submiter").innerText === "Add Expense")
                 // ideally, a bit of quick input validation
                 if(title && category && date && !isNaN(amount)) {
                     // ccreate a new expense object we'll be adding to the grid of cards!
@@ -66,11 +66,14 @@ document
                 } else {
                     alert("Please fill in all fields correctly."); // placeholder 
                 } else {
+                    console.log("entered edit logic branch")
                     // non-obvious: if the text isn't "Add Expense" (because I'll change)
                     const expenseId = parseInt(document.getElementById("expense-id")); // reading from 
                     const expenseToEdit = theExpenses.find (
                         (expense) => expense.id === expenseId
                     );
+                    console.log(expenseId);
+                    console.log(expenseToEdit);
                     if (expenseToEdit) {// simple null check - did I actually get something
                         expenseToEdit.title = title;
                         expenseToEdit.category = category;
@@ -97,4 +100,51 @@ document
                 );
                 renderExpenses(filteredExpenses);
             }
+        );
+
+        // 7. add an event listener to the entiere container of items,
+        // and then differentiate between click events to fire specific logic
+        // --> the alternative would be attaching a listener to every single card,
+        // which becomes unfeasable when you have a TON of items
+        expenseContainer.addEventListener(
+            "click",
+            function (event) {
+                // a) look for the delete button click, or
+                if(event.target.classList.contains("delete-btn")) {
+                    const expenseId = parseInt(event.target.id)
+                    const expenseIndex = theExpenses.findIndex(
+                        // notice hwo I'm getting the "position" of the desired element in the array,
+                        // "not" the element/object itself
+                        (expense) => expense.id === expenseId
+                    );
+                    if (expenseIndex != -1) {
+                        theExpenses.splice(expenseIndex, 1);
+                        // pay attention to the parameters here (e.g mouseover split)
+                        // param1 - the index to begin deleting "at" *required*)
+                        // param2 - how many elements to remove (including starting elements)
+                        //          is optional = if not provided, removes everything at once.
+                        renderExpenses(theExpenses);
+                    } else if (event.target.classList.contains("edit-btn")) {
+                        const expenseId = parseInt("event.target.id");
+                        const expenseToEdit = theExpenses.find(
+                            (expense) => expense.id === expenseId
+                        );
+                        // assign the existing values of the data object
+                        if (expenseToEdit)
+                        {
+                            document.getElementById("title").value = expenseToEdit.title;
+                            document.getElementById("category").value = expenseToEdit.category;
+                            document.getElementById("date").value = expenseToEdit.date;
+                            document.getElementById("amount").value = expenseToEdit.amount;
+                            document.getElementById("expense-id").value = expenseToEdit.id;
+                            // and for my last trick, toggling the text of the button to toggle creating vs,
+                            document.getElementById("submiter").innerText = "Save Changes";
+                        }
+                    }
+                }
+                // b) look for the edit button click
+            }
         )
+
+
+
