@@ -65,7 +65,7 @@ document
                 }
             } else {
                 // non-obvious: if the text isn't "Add Expense" (beacuse I'll change it when editing), do this other behaviour (for editing)
-                const expenseId = parseInt(document.getElementById("expense-id"))  // reading from hidden input
+                const expenseId = parseInt(document.getElementById("expense-id").value);  // reading from hidden input
                 const expenseToEdit = theExpenses.find(
                     (expense) => expense.id === expenseId
                 );
@@ -95,3 +95,47 @@ document
             renderExpenses(filteredExpenses);
         }
     );
+
+// 7. add an event listener to the entire container of items,
+//    *and then* differentiate between click events to fire specific logic
+//    -> the alternative would be attaching a listener to every single card,
+//       which becomes unfeasible when you have a TON of items
+expenseContainer.addEventListener(
+    "click",
+    function (event) {
+        // a) look for the delete button click, or
+        if (event.target.classList.contains("delete-btn")) {
+            const expenseId = parseInt(event.target.id)
+            const expenseIndex = theExpenses.findIndex(
+                // notice how I'm getting the *position* of the desired element in the array,
+                // *not* the element/object itself
+                (expense) => expense.id === expenseId
+            );
+            if (expenseIndex != -1) {
+                theExpenses.splice(expenseIndex, 1);
+                // ^ pay attention to the parameters here (e.g. mouseover splice in vscode):
+                //    param1 - the index to begin deleting at (required)
+                //    param2 - how many elements to remove (including starting element).
+                //              is optional - if not provided, removes everything at or after the param1 index
+                renderExpenses(theExpenses);
+            }
+        // b) look for the edit button click
+        } else if (event.target.classList.contains("edit-btn")) {
+            const expenseId = parseInt(event.target.id);
+            const expenseToEdit = theExpenses.find(
+                (expense) => expense.id === expenseId
+            );
+            // assign the existing values of the data object to the input field values
+            if (expenseToEdit) {
+                document.getElementById("title").value = expenseToEdit.title
+                document.getElementById("category").value = expenseToEdit.category
+                document.getElementById("date").value = expenseToEdit.date
+                document.getElementById("amount").value = expenseToEdit.amount
+                document.getElementById("expense-id").value = expenseToEdit.id
+                // and for my last trick, toggling the text of the button to toggle creating vs. editing in step5
+                document.getElementById("submiter").innerText = "Save Changes"
+            }
+        }
+        
+    }
+);
