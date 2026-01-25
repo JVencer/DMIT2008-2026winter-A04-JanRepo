@@ -124,26 +124,28 @@ document
                         // param2 - how many elements to remove (including starting elements)
                         //          is optional = if not provided, removes everything at once.
                         renderExpenses(theExpenses);
+                    }
+                        // b) look for the edit button click
                     } else if (event.target.classList.contains("edit-btn")) {
-                        const expenseId = parseInt("event.target.id");
+                        const expenseId = parseInt(event.target.id);
                         const expenseToEdit = theExpenses.find(
                             (expense) => expense.id === expenseId
                         );
                         // assign the existing values of the data object
                         if (expenseToEdit)
                         {
-                            document.getElementById("title").value = expenseToEdit.title;
-                            document.getElementById("category").value = expenseToEdit.category;
-                            document.getElementById("date").value = expenseToEdit.date;
-                            document.getElementById("amount").value = expenseToEdit.amount;
-                            document.getElementById("expense-id").value = expenseToEdit.id;
+                            document.getElementById("title").value = expenseToEdit.title
+                            document.getElementById("category").value = expenseToEdit.category
+                            document.getElementById("date").value = expenseToEdit.date
+                            document.getElementById("amount").value = expenseToEdit.amount
+                            document.getElementById("expense-id").value = expenseToEdit.id
                             // and for my last trick, toggling the text of the button to toggle creating vs,
-                            document.getElementById("submiter").innerText = "Save Changes";
+                            document.getElementById("submiter").innerText = "Save Changes"
                         }
                     }
                 }
-                // b) look for the edit button click
-            }
+                
+            
         )
 
 
