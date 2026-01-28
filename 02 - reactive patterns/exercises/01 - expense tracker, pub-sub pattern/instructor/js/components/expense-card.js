@@ -1,8 +1,17 @@
-class ExpenseCard extends HTMLElement {
-  constructor() {
-    super();
-    this.attachShadow({ mode: "open" });
+// 0. This is a component for *one* of the expense cards.
+//    We're making a custom HTML element that we can use natively in e.g. index.html
+//    Notice how this component has no behavioural logic -- that's separated out.
+//    It just has structure/definition. It's basically a template to be hydrated with data by outside logic.
 
+class ExpenseCard extends HTMLElement {
+  constructor() { // things we want to happen when creating an instance of this element
+    super(); // first, call the constructor from the parent class
+    this.attachShadow({ mode: "open" }); // then, create a shadow DOM root (to encapsulate CSS styling)
+    // "open" means the element can be accessible/mutable from outside code behaviour in the DOM,
+    // "closed" would mean outside javascript behaviour cannot affect this component at all.
+
+    // if we want, we can apply custom styling to our component,
+    // guaranteed to behave as we expect because we're now in a shadow root (global DOM styling cannot pierce through.)
     const style = document.createElement("style");
     style.textContent = `
     .card {
@@ -50,7 +59,7 @@ class ExpenseCard extends HTMLElement {
   color: white;
 }`;
 
-
+    // notice how there are no values inline here, just identifiable classes/IDs.
     this.shadowRoot.innerHTML = `
       <div class="card" id="">
         <div class="header">
@@ -70,8 +79,12 @@ class ExpenseCard extends HTMLElement {
         this.shadowRoot.appendChild(style);
   }
 
-  connectedCallback() {
+  // the constructor will fire first.
+  // then, connectedCallback() fires anytime an instance of this component is attached to the DOM.
+  // -> even reordering a list, or removing and readding the instance, triggers this method.
+  connectedCallback() { 
     this.shadowRoot.querySelector(".title").textContent =
+      // x || y -> "x if x resolves truthy, else y"
       this.getAttribute("title") || "No title";
     this.shadowRoot.querySelector(".category").textContent =
       "Category: " + (this.getAttribute("category") || "");
@@ -83,4 +96,5 @@ class ExpenseCard extends HTMLElement {
   }
 }
 
+// finally, 'export' the custom element so it can be accessed natively.
 customElements.define("expense-card", ExpenseCard);

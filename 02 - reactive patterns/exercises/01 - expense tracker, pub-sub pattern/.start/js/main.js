@@ -9,10 +9,3 @@ const theExpenses = [
 
 expenseContainer.setAttribute('expenses', JSON.stringify(theExpenses));
 
-let oldExpnses=expenseContainer.getAttribute('expenses');
-oldExpnses=JSON.parse(oldExpnses);
-const newExpnses=oldExpnses.map(item=>{
-    item.amount*=1.2;
-    return item;
-})
-expenseContainer.setAttribute('expenses', JSON.stringify(newExpnses));
