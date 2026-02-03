@@ -94,7 +94,7 @@ class ExpenseCard extends HTMLElement {
           {                  // second term: event info
             detail: { id: this.id },   // detail: the payload/data/message that is passed with the event
             bubbles: true,             // can propagate upwards through DOM, rather than direct sender/receiver info
-            compose: true,             // event can cross shadow DOM boundary
+            composed: true,             // event can cross shadow DOM boundary
           }
         );
 
@@ -123,7 +123,7 @@ class ExpenseCard extends HTMLElement {
                 amount: this.getAttribute("amount"),
               },  
               bubbles: true,
-              compose: true,
+              composed: true,
             }
           )
         );
