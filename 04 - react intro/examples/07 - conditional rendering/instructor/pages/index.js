@@ -62,7 +62,7 @@ export default function Home() {
     }
 
   setMovies(filteredMovies)
-  
+
   }
 
   return (
@@ -122,6 +122,15 @@ export default function Home() {
             </Grid>
           </form>
           <List sx={{width: `100%`}}>
+          {movies.length === 0 &&
+            <ListItem>
+              <ListItemText>
+               <Typography variant="p" component="div">
+                No results please search again.
+               </Typography>
+              </ListItemText>
+            </ListItem>
+          }
           { movies.map((movieData, index)=> {
               return <ListItem key={index}>
                 <ListItemText>
