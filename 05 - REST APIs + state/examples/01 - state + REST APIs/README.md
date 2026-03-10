@@ -77,7 +77,7 @@ Observe what happens when you click the button, the project
 5. Let's hook up the quote api with our project.
 - under the function definition of home create a const that will have the url.
 ```js
-const RANDOM_QUOTE_URL = 'https://api.quotable.io/random'
+const RANDOM_QUOTE_URL = 'https://dummyjson.com/quotes/random'
 ```
 - change `handleClick` function so that we fetch the url and with the result we use the `setQuoteData` function to change the values.
 ```js
