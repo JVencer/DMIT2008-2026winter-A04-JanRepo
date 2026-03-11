@@ -1,0 +1,26 @@
+main{
+    max-width: 960px;
+    margin: 0 auto;
+}
+header{
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+}
+header p{
+    text-align: center;
+    margin: 0;
+}   
+header h1{
+    text-align: center;
+    margin: 0;
+}
+.blogs{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 1rem auto;
+}  
+
